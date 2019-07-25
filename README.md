@@ -1,11 +1,13 @@
 # Spotify Upgrade Bot by matt
 
 ## Basic informations
-```
-Coded in Python
-Needed capture format is USER:PASS:ZIPCODE:CITY:ADDRESS
-GPL License = Free for all, but you have to post any updates for free
-```
+
+>Coded in Python
+
+>Needed capture format is USER:PASS:ZIPCODE:CITY:ADDRESS
+
+>GPL License = Free for all, but you have to post any updates for free
+
 
 ## Creating bot, and getting it's token
 ```
