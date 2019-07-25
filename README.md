@@ -59,7 +59,7 @@
 !stock all - Check stocks for all countries
 !info - informations about bot.
 
-! is only used as examply, you need to use prefix you've set
+! is only used as example, you need to use prefix you've set
 Use all commands without <> it's only as example
 ```
 ## Other info
