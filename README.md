@@ -63,7 +63,7 @@
 Use all commands without <> it's only as example
 ```
 ## Other info
->Developed by **matt** https://www.nulled.to/user/2158082-matoooo and his second self **tomatoj**
+>Developed by **matt** **https://www.nulled.to/user/2158082-matoooo** and his second self **tomatoj**
 
 >**Billie is best https://www.nulled.to/user/1236023-billieeilish**
 
