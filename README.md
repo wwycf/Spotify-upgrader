@@ -27,14 +27,19 @@
 
 
 ## Preparing BOT to be ready to upgrade accounts
-```
-1 - Open **config.json**.
-2 - Paste values into json config (Like **token** etc..)
-3 - Refill accounts in **"Accounts"** folder.
-4 - Generate keys by double clicking on **keygen.bat or keygen.exe**.
-5 - Run Bot by double clicking on **SpotifyBot.bat or SpotifyBot.exe**.
-6 - Congratulations, bot is now ready to be used! :)
-```
+
+>1 - Open **config.json**.
+
+>2 - Paste values into json config (Like **token** etc..)
+
+>3 - Refill accounts in **"Accounts"** folder.
+
+>4 - Generate keys by double clicking on **keygen.bat or keygen.exe**.
+
+>5 - Run Bot by double clicking on **SpotifyBot.bat or SpotifyBot.exe**.
+
+>6 - Congratulations, bot is now ready to be used! :)
+
 >**Token** - Token of your bot Prefix - Thing that will be used to execute commands (for example !)
 
 >**Channel** - Channel where users can upgrade thier accounts
