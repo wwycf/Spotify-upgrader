@@ -35,7 +35,7 @@
 5 - Run Bot by double clicking on SpotifyBot.bat or SpotifyBot.exe.
 6 - Congratulations, bot is now ready to be used! :)
 ```
->Token - Token of your bot Prefix - Thing that will be used to execute commands (for example !)
+>**Token** - Token of your bot Prefix - Thing that will be used to execute commands (for example !)
 
 >Channel - Channel where users can upgrade thier accounts
 
