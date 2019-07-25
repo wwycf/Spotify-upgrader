@@ -50,12 +50,14 @@ GPL License = Free for all, but you have to post any updates for free
 >Use all commands without <> it's only as example
 
 ###### Other info
-```
-Developed by matt https://www.nulled.to/user/2158082-matoooo and his second self tomatoj
-Billie is best https://www.nulled.to/user/1236023-billieeilish
-In case of need you can always contact me on Discord matooo#5132
-This is opensource with GPL license, that mean you should release any bigger update you will make to BOT for free
-```
+>Developed by matt https://www.nulled.to/user/2158082-matoooo and his second self tomatoj
+
+>Billie is best https://www.nulled.to/user/1236023-billieeilish
+
+>In case of need you can always contact me on Discord matooo#5132
+
+>This is opensource with GPL license, that mean you should release any bigger update you will make to BOT for free
+
 
 
 
