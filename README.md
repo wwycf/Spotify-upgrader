@@ -8,14 +8,12 @@ GPL License = Free for all, but you have to post any updates for free
 ```
 
 ## Creating bot, and getting it's token
-```
-1 - Visit **https://discordapp.com/developers/applications/** (and login)
-2 - Click on **"New Application"**, give it whatever name you want to.
-3 - Once it's created, click on **"Bot"** tab.
-4 - Click **"Add bot"**, and **"Yes, do it!"**.
-5 - Perfect, now set-up your bot (add name and shits like that), and under **"Token"** click on **"Copy"**
-6 - Invite bot with Administrator permissions here **https://discordapi.com/permissions.html**
-```
+>1 - Visit **https://discordapp.com/developers/applications/** (and login)
+>2 - Click on **"New Application"**, give it whatever name you want to.
+>3 - Once it's created, click on **"Bot"** tab.
+>4 - Click **"Add bot"**, and **"Yes, do it!"**.
+>5 - Perfect, now set-up your bot (add name and shits like that), and under **"Token"** click on **"Copy"**
+>6 - Invite bot with Administrator permissions here **https://discordapi.com/permissions.html**
 > You can get client **ID** under **OAuth2** on **https://discordapp.com/developers**
 
 ## Preparing BOT to be ready to upgrade accounts
