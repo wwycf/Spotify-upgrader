@@ -154,10 +154,7 @@ async def redeem(ctx, country: str, email: str, code: str):
                     combo = account.split(':') #Splitting string into list
                     User = combo[0]
                     Pass = combo[1]
-                    City = combo[4]
-                    ZipCode = combo[3]
-                    Address =combo[5]
-                    Country = combo[2]
+                    Country = country
                     embed = discord.Embed(
                         title=f"Trying to send an invite...", color=0xffa500)
                     await message.edit(embed=embed)
@@ -222,6 +219,41 @@ async def redeem(ctx, country: str, email: str, code: str):
 
                             print(inviteJson)
                             if inviteJson["success"] is True: #If user was successfully invited to familly plan
+                                url = "https://www.spotify.com/us/account/overview/"
+
+                                secondLogin = await session.get(url, headers=headers)
+                                csrf = secondLogin.headers['X-Csrf-Token']
+
+                                url = 'https://www.spotify.com/us/family/overview/'
+
+                                headers = {
+                                    'Accept': '*/*',
+                                    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1',
+                                    'x-csrf-token': csrf
+                                }
+                                async with await session.get(url,headers=headers) as resp:
+                                    WebsiteResponse = await resp.text()
+                                    Replace0 = WebsiteResponse.replace("x7B", "<")
+                                    Replace1 = Replace0.replace("x20","")
+                                    Replace2 = Replace1.replace("x22",'"')
+                                    Replace3 = Replace2.replace("x3A", ':')
+                                    Replace4 = Replace3.replace("x2D", '-')
+                                    Replace5 = Replace4.replace("x5D", ')')
+                                    Replace6 = Replace5.replace("x5B", '(')
+                                    Replace7 = Replace6.replace("x7D", '>')
+                                    Replace8 = Replace7.replace("\\", '')
+                                    PostCodeUnfixed = re.search('postalCode":"(.*)","city"', Replace8)
+                                    PostCodeSep = '","'
+                                    ZipCode = PostCodeUnfixed.group(1).split(PostCodeSep, 1)[0]
+                                    CityUnfixed = re.search(f'"postalCode":"{ZipCode}","city":"(.*)","line1":"', Replace8)
+                                    CitySep = '","'
+                                    City = CityUnfixed.group(1).split(CitySep, 1)[0]
+                                    AddressUnfixed = re.search(f'city":"{City}","line1":"(.*)">,"canInvite":', Replace8)
+                                    AddressSep = '":"'
+                                    AddressTemps = AddressUnfixed.group(1).split(AddressSep, 1)[0]
+                                    AddressTemp = AddressTemps
+                                    AddressTempSep = '">,"canInvite"'
+                                    Address = AddressTemp.split(AddressTempSep, 1)[0]
                                 if not City:
                                     embed = discord.Embed(
                                         title=f"Invitation code was sent, check private messages @{ctx.author}.",color=0x00FF00)
@@ -370,12 +402,8 @@ async def restock(ctx, file:str):
         accountCountry = accCountry[2]
         User = accCountry[0]
         Pass = accCountry[1]
-        City = accCountry[4]
-        ZipCode = accCountry[3]
-        Address = accCountry[5]
-        Country = accCountry[2]
         restockFile = open(f"Accounts/{accountCountry}.txt", "a+") #Loading lines 1 by 1 into files
-        restockFile.write(f'\n{User}:{Pass}:{Country}:{ZipCode}:{City}:{Address}')
+        restockFile.write(f'\n{User}:{Pass}')
         with open(f"{file}.txt", "w") as f:
             for line in lines:
                 if line.strip("\n") != f"{User}:{Pass}":
