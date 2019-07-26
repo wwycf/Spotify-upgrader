@@ -4,7 +4,7 @@
 
 >Coded in Python
 
->Needed capture format is **USER:PASS:ZIPCODE:CITY:ADDRESS**
+>Needed capture format is **USER:PASS**
 
 >**GPL License = Free for all, but you have to post any updates for free**
 
