@@ -1,7 +1,7 @@
 {
-  "Token": "NTk3MzkwNTEyMDUxNDUzOTUy.XTs51A.5VKGB3bXZpgjBkiunmRrUf0geUU",
-  "Prefix": "!",
-  "Channel": "spotify",
-  "AdministratorRole": "owner",
-  "StockChannel": "stock"
+  "Token": "Paste token here",
+  "Prefix": "Paste your prefix here",
+  "Channel": "Channel where user wiil upgrade their accounts",
+  "AdministratorRole": "Role that will have access to all commands from bot (like restock)",
+  "StockChannel": "Channel where users can check stocks"
 }
