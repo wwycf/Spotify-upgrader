@@ -54,7 +54,8 @@
 !help command - Use this command to check help for specific command.
 !redeem country email code - Use this to invite your account to Spotify Family Plan
 !refresh - Use this command to detect newly added codes in codes file.
-!restock file - Use this command to restock bot (file is filename without .txt) - Currently Slow
+!restock all - Use this command to restock all countries
+!restock country - Use this command to restock specific country
 !stock country - Check stocks for specific country
 !stock all - Check stocks for all countries
 !info - informations about bot.
