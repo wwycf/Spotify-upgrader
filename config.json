@@ -1,7 +1,7 @@
 {
-  "Token": "Paste token here",
-  "Prefix": "Paste your prefix here",
-  "Channel": "Channel where user wiil upgrade their accounts",
-  "AdministratorRole": "Role that will have access to all commands from bot (like restock)",
+  "Token": "Insert your bot token here.",
+  "Prefix": "Prefix you want to use for bot",
+  "Channel": "Channel where users can upgrade their accounts",
+  "AdministratorRole": "Role that will have access to all commands",
   "StockChannel": "Channel where users can check stocks"
 }
