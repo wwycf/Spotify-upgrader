@@ -53,12 +53,12 @@
 !help - Use this command to check all available commands
 !help command - Use this command to check help for specific command.
 !redeem country email code - Use this to invite your account to Spotify Family Plan
-!refresh - Use this command to detect newly added codes in codes file.
 !restock all - Use this command to restock all countries
 !restock country - Use this command to restock specific country
 !stock country - Check stocks for specific country
 !stock all - Check stocks for all countries
-!info - informations about bot.
+!credits - informations about bot.
+!cls - clear console window.
 
 ! is only used as example, you need to use prefix you've set
 Use all commands without <> it's only as example
