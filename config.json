@@ -1,0 +1,7 @@
+{
+  "Token": "Insert your bot token here.",
+  "Prefix": "Prefix you want to use for bot",
+  "Channel": "Channel where users can upgrade their accounts",
+  "AdministratorRole": "Role that will have access to all commands",
+  "StockChannel": "Channel where users can check stocks"
+}
