@@ -1,5 +1,5 @@
 # Spotify Upgrade Bot by matt
-
+# If you do not understand something, please check out this page https://github.com/mattprocoder/Spotify-upgrade-bot-for-Discord-by-matt/wiki
 ## Basic informations
 
 >Coded in Python
