@@ -72,7 +72,7 @@ Use all commands without <> it's only as example
 
 >**This is opensource with GPL license, that mean you should release any bigger update you will make to BOT for free**
 
-
+### If you have problem with anything please visit this site https://github.com/mattprocoder/Spotify-upgrade-bot-for-Discord-by-matt/wiki
 
 
 
