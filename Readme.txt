@@ -1,0 +1,1 @@
+Please create Account and Restocks folder in order for bot to work properly.
