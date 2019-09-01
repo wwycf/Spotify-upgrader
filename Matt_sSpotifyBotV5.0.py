@@ -111,6 +111,7 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                             await message.edit(embed=embed)
                             print (Fore.RED + f"User @{ctx.author} tried to upgrade his account, but {country.upper()} is already out of stock or never had any stocks")
                             print (Fore.RESET)
+                            result = "true"
                             break
                         try:
                             with open('Accounts/'+f'{country.upper()}'+'.txt','r') as (f):
@@ -122,6 +123,8 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                             embed = discord.Embed(
                             title=f"Sorry, but We currently don't offer upgrades in this country.", color=0xd3d3d3)
                             await ctx.send(embed=embed)
+                            result = "true"
+                            break
                         try:
                             account = Accounts.pop()
                             embed = discord.Embed(
@@ -135,6 +138,7 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                             await message.edit(embed=embed)
                             print (Fore.RED + f"User @{ctx.author} tried to upgrade his account, but {country.upper()} is already out of stock or never had any stocks")
                             print (Fore.RESET)
+                            result = "true"
                             break
                         combo = account.split(':')
                         user = combo[0]
@@ -174,8 +178,23 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                             postLoginJson = await postLogin.json()
                             if Debug == "Debug":
                                 print(postLoginJson)
-                        
-                            if 'displayName' in postLoginJson:
+                                print(postLoginJson.get('error'))
+                            errorMessage = postLoginJson.get('error')
+                            if errorMessage == "errorInvalidCredentials":
+                                with open(f"Accounts/{country.upper()}.txt", "w") as f:
+                                        for line in lines:
+                                            if line.strip("\n") != f"{user}:{password}":
+                                                f.write(line)
+                                        result = 'false'
+                                        tries += 1
+                                        if Debug == "Debug":
+                                            print(Fore.RED + f"Failed to upgrade {ctx.author} retrying...({tries})")
+                                            print(Fore.RESET)
+                                        if tries >= 5:
+                                            embed = discord.Embed(
+                                                title=f"There were some issues, retrying.", color=0xd3d3d3)
+                                            await message.edit(embed=embed)
+                            elif 'displayName' in postLoginJson:
 
                                 url = "https://www.spotify.com/us/account/overview/"
 
@@ -304,7 +323,7 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                                         for line in lines:
                                             if line.strip("\n") != f"{user}:{password}":
                                                 f.write(line)
-                                    result = 'false'
+                                        result = 'false'
                     if result == "true":
                         break
                     if tries >= 6:
@@ -380,6 +399,7 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                                 await message.edit(embed=embed)
                                 print (Fore.RED + f"User @{ctx.author} tried to upgrade his account, but {country.upper()} is already out of stock or never had any stocks")
                                 print (Fore.RESET)
+                                result = "true"
                                 break
                             try:
                                 with open('Accounts/'+f'{country.upper()}'+'.txt','r') as (f):
@@ -391,6 +411,8 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                                 embed = discord.Embed(
                                 title=f"Sorry, but We currently don't offer upgrades in this country.", color=0xd3d3d3)
                                 await ctx.send(embed=embed)
+                                result = "true"
+                                break
                             try:
                                 account = Accounts.pop()
                                 embed = discord.Embed(
@@ -404,6 +426,7 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                                 await message.edit(embed=embed)
                                 print (Fore.RED + f"User @{ctx.author} tried to upgrade his account, but {country.upper()} is already out of stock or never had any stocks")
                                 print (Fore.RESET)
+                                result = "true"
                                 break
                             combo = account.split(':')
                             user = combo[0]
@@ -443,7 +466,22 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                                 postLoginJson = await postLogin.json()
                                 if Debug == "Debug":
                                     print(postLoginJson)
-                        
+                                    print(postLoginJson.get('error'))
+                                errorMessage = postLoginJson.get('error')
+                                if errorMessage == "errorInvalidCredentials":
+                                    with open(f"Accounts/{country.upper()}.txt", "w") as f:
+                                            for line in lines:
+                                                if line.strip("\n") != f"{user}:{password}":
+                                                    f.write(line)
+                                            result = 'false'
+                                            tries += 1
+                                            if Debug == "Debug":
+                                                print(Fore.RED + f"Failed to upgrade {ctx.author} retrying...({tries})")
+                                                print(Fore.RESET)
+                                            if tries >= 5:
+                                                embed = discord.Embed(
+                                                    title=f"There were some issues, retrying.", color=0xd3d3d3)
+                                                await message.edit(embed=embed)
                                 if 'displayName' in postLoginJson:
 
                                     url = "https://www.spotify.com/us/account/overview/"
