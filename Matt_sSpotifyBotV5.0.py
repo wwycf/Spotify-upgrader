@@ -98,7 +98,7 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                     title="Searching for an account...", color=0xffa500)
                 message = await ctx.send(embed=embed)
                 while result != "true":
-                    while tries <= 100:
+                    while tries <= 5:
                         try:
                             with open(f"Accounts/{country.upper()}.txt") as filehandle:
                                 lines = filehandle.readlines()
@@ -201,6 +201,9 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                                 if Debug == "Debug":
                                     print(inviteJson)
                                 if inviteJson["success"] is True:
+                                    if Debug == "Debug":
+                                        print(inviteJson.get('token'))
+                                    invitetoken = inviteJson.get('token')
                                     url = "https://www.spotify.com/us/account/overview/"
 
                                     secondLogin = await session.get(url, headers=headers)
@@ -266,6 +269,7 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                                                               f'\n**Street Name**: `You can add random {country.upper()} street`'
                                                               f'\n**Postal Code**: `You can add random {country.upper()} postal code`'
                                                               f'\n**Country**: `{country.upper()}`'
+                                                              f'\n**Invite Link**: `https://www.spotify.com/{country.lower()}/family/redeem/?token={invitetoken}`'
                                                               f'\n**You can add random {country.upper()} address if these fields are empty.**'
                                                               )
                                         result = "true"
@@ -283,6 +287,7 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                                                                    f'\n**Street Name**: `{Address}`'
                                                                    f'\n**Postal Code**: `{ZipCode}`'
                                                                    f'\n**Country**: `{country.upper()}`'
+                                                                   f'\n**Invite Link**: `https://www.spotify.com/{country.lower()}/family/redeem/?token={invitetoken}`'
                                                                    f'\n**You can add random {country.upper()} address if these fields are empty.**'
                                                                    )
                                         result = "true"
@@ -311,7 +316,7 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                         await message.edit(embed=embed)
                         print(Fore.RED + f"Seems like there are some issues with {country.upper()} please check your stock if there isn't something weird happening.")
                         print(Fore.RESET)
-                        return
+                        break
             else:
                 if Debug == "Debug":
                     print(Fore.RED + f"User {ctx.author} tried to upgrade with invalid email address {email}")
@@ -465,6 +470,9 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                                     if Debug == "Debug":
                                         print(inviteJson)
                                     if inviteJson["success"] is True:
+                                        if Debug == "Debug":
+                                            print(inviteJson.get('token'))
+                                        invitetoken = inviteJson.get('token')
                                         url = "https://www.spotify.com/us/account/overview/"
 
                                         secondLogin = await session.get(url, headers=headers)
@@ -530,6 +538,7 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                                                                   f'\n**Street Name**: `You can add random {country.upper()} street`'
                                                                   f'\n**Postal Code**: `You can add random {country.upper()} postal code`'
                                                                   f'\n**Country**: `{country.upper()}`'
+                                                                  f'\n**Invite Link**: `https://www.spotify.com/{country.lower()}/family/redeem/?token={invitetoken}`'
                                                                   f'\n**You can add random {country.upper()} address if these fields are empty.**'
                                                                   )
                                             bot.codes.remove(code)  # Remove code from codes list after user got invite code.
@@ -552,6 +561,7 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                                                                        f'\n**Street Name**: `{Address}`'
                                                                        f'\n**Postal Code**: `{ZipCode}`'
                                                                        f'\n**Country**: `{country.upper()}`'
+                                                                       f'\n**Invite Link**: `https://www.spotify.com/{country.lower()}/family/redeem/?token={invitetoken}`'
                                                                        f'\n**You can add random {country.upper()} address if these fields are empty.**'
                                                                        )
                                             bot.codes.remove(code)  # Remove code from codes list after user got invite code.
