@@ -195,40 +195,13 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                                                 title=f"There were some issues, retrying.", color=0xd3d3d3)
                                             await message.edit(embed=embed)
                             elif 'displayName' in postLoginJson:
-
-                                url = "https://www.spotify.com/us/account/overview/"
-
-                                secondLogin = await session.get(url,headers=headers)
-                                csrf = secondLogin.headers['X-Csrf-Token']
-
-                                url = 'https://www.spotify.com/us/family/api/master-invite-by-email/'
-
-                                headers = {
-                                    'Accept': '*/*',
-                                    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1',
-                                    'x-csrf-token': csrf
-                                }
-
-                                postData = {
-                                    'firstName': Name,
-                                    'lastName': Surname,
-                                    'email': email
-                                }
-
-                                invitePost = await session.post(url,headers=headers,json=postData)
-                                inviteJson = await invitePost.json()
-                                if Debug == "Debug":
-                                    print(inviteJson)
-                                if inviteJson["success"] is True:
-                                    if Debug == "Debug":
-                                        print(inviteJson.get('token'))
-                                    invitetoken = inviteJson.get('token')
+                                if 1 == 1:
                                     url = "https://www.spotify.com/us/account/overview/"
 
                                     secondLogin = await session.get(url, headers=headers)
                                     csrf = secondLogin.headers['X-Csrf-Token']
 
-                                    url = 'https://www.spotify.com/us/family/overview/'
+                                    url = 'https://www.spotify.com/us/home-hub/api/v1/family/home/'
 
                                     headers = {
                                         'Accept': '*/*',
@@ -236,81 +209,40 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                                         'x-csrf-token': csrf
                                     }
                                     async with await session.get(url,headers=headers) as resp:
-                                        WebsiteResponse = await resp.text()
+                                        WebsiteResponse = await resp.json()
                                         if Debug == "Debug":
                                             print(Fore.RESET + f"{WebsiteResponse}")
-                                        Replace0 = WebsiteResponse.replace("x7B", "<")
-                                        Replace1 = Replace0.replace("x20","")
-                                        Replace2 = Replace1.replace("x22",'"')
-                                        Replace3 = Replace2.replace("x3A", ':')
-                                        Replace4 = Replace3.replace("x2D", '-')
-                                        Replace5 = Replace4.replace("x5D", ')')
-                                        Replace6 = Replace5.replace("x5B", '(')
-                                        Replace7 = Replace6.replace("x7D", '>')
-                                        Replace8 = Replace7.replace("\\", '')
-                                        PostCodeUnfixed = re.search('postalCode":"(.*)","city"', Replace8)
-                                        if Debug == "Debug":
-                                            print(Fore.RESET + f"Unfixed postal code {PostCodeUnfixed}")
-                                        if PostCodeUnfixed == None:
-                                            ZipCode = ""
-                                        else:    
-                                            PostCodeSep = '","'
-                                            ZipCode = PostCodeUnfixed.group(1).split(PostCodeSep, 1)[0]
-                                        CityUnfixed = re.search(f'"postalCode":"{ZipCode}","city":"(.*)","line1":"', Replace8)
-                                        if Debug == "Debug":
-                                            print(Fore.RESET + f"Unfixed city {CityUnfixed}")
-                                        if CityUnfixed == None:
-                                            City = ""
-                                        else:
-                                            CitySep = '","'
-                                            City = CityUnfixed.group(1).split(CitySep, 1)[0]
-                                        AddressUnfixed = re.search(f'city":"{City}","line1":"(.*)">,"canInvite":', Replace8)
-                                        if Debug == "Debug":
-                                            print(Fore.RESET + f"Unfixed address {AddressUnfixed}")
-                                        if AddressUnfixed == None:
-                                            City = ""
-                                        else:
-                                            AddressSep = '":"'
-                                            AddressTemps = AddressUnfixed.group(1).split(AddressSep, 1)[0]
-                                            AddressTemp = AddressTemps
-                                            AddressTempSep = '">,"canInvite"'
-                                            Address = AddressTemp.split(AddressTempSep, 1)[0]
-                                    if not City:
-                                        embed = discord.Embed(
-                                            title=f"Invitation code was sent, check private messages @{ctx.author}.",color=0x00FF00)
-                                        await message.edit(embed=embed)
-                                        print(Fore.GREEN + f'@{ctx.author} successfully upgraded his account {email} from {country.upper()} in free mode')
-                                        await ctx.author.send(f"Please check for an email from Spotify for an invitation link!"
-                                                              f"\nFill in these informations in form!"
-                                                              f"\n"
-                                                              f"\nInvite sent to: {email}"
-                                                              f'\n**City**: `You can add random {country.upper()} city`'
-                                                              f'\n**Street Name**: `You can add random {country.upper()} street`'
-                                                              f'\n**Postal Code**: `You can add random {country.upper()} postal code`'
-                                                              f'\n**Country**: `{country.upper()}`'
-                                                              f'\n**Invite Link**: `https://www.spotify.com/{country.lower()}/family/redeem/?token={invitetoken}`'
-                                                              f'\n**You can add random {country.upper()} address if these fields are empty.**'
-                                                              )
-                                        result = "true"
-                                        break
-                                    else:
-                                        embed = discord.Embed(
-                                            title=f"Invitation code was sent, check private messages @{ctx.author}.", color=0x00FF00)
-                                        await message.edit(embed=embed)
-                                        print(Fore.GREEN + f'@{ctx.author} successfully upgraded his account {email} from {country.upper()} in free mode')
-                                        await ctx.author.send(f"Please check for an email from Spotify for an invitation link!"
-                                                                   f"\nFill in these informations in form!"
-                                                                   f"\n"
-                                                                   f"\nInvite sent to: {email}"
-                                                                   f'\n**City**: `{City}`'
-                                                                   f'\n**Street Name**: `{Address}`'
-                                                                   f'\n**Postal Code**: `{ZipCode}`'
-                                                                   f'\n**Country**: `{country.upper()}`'
-                                                                   f'\n**Invite Link**: `https://www.spotify.com/{country.lower()}/family/redeem/?token={invitetoken}`'
-                                                                   f'\n**You can add random {country.upper()} address if these fields are empty.**'
-                                                                   )
-                                        result = "true"
-                                        break
+                                        accessControl = WebsiteResponse["accessControl"]
+                                        Slots = accessControl["planHasFreeSlots"]
+                                        if Slots is True:
+                                            Address = WebsiteResponse["address"]
+                                            inviteToken = WebsiteResponse["inviteToken"]
+                                            embed = discord.Embed(
+                                                title=f"Invitation code was sent, check private messages @{ctx.author}.", color=0x00FF00)
+                                            await message.edit(embed=embed)
+                                            print(Fore.GREEN + f'@{ctx.author} successfully upgraded his account {email} from {country.upper()} in free mode')
+                                            await ctx.author.send(f"In order to upgrade your account please click on lin below, and enter prov"
+                                                                       f"\nFill in these informations in form!"
+                                                                       f"\n"
+                                                                       f'\n**Address**: `{Address}`'
+                                                                       f'\n**Invite Link**: https://www.spotify.com/{country.lower()}/family/join/invite/{inviteToken}'
+                                                                       f'\n**You can add random {country.upper()} address if these fields are empty.**'
+                                                                       )
+                                            result = "true"
+                                            break
+                                        elif Slots is False:
+                                            tries += 1
+                                            if Debug == "Debug":
+                                                print(Fore.RED + f"Failed to upgrade {ctx.author} retrying...({tries})")
+                                                print(Fore.RESET)
+                                            embed = discord.Embed(
+                                            title=f"There were some issues, retrying.", color=0xd3d3d3)
+                                            await message.edit(embed=embed)
+                                            with open(f"Accounts/{country.upper()}.txt", "w") as f:
+                                                for line in lines:
+                                                    if line.strip("\n") != f"{user}:{password}":
+                                                        f.write(line)
+                                            result = 'false'
                                 else:
                                     tries += 1
                                     if Debug == "Debug":
@@ -363,6 +295,9 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                 if code not in bot.codes:
                     embed = discord.Embed(
                     title=f"{ctx.author} That's a bad upgrade key, sorry :/, please try again. It's possible that code wasn't in system so far", color=0xff5959)
+                    with open(Codes, "r") as file:
+                        bot.codes = [code.strip("\n") for code in file.readlines()]
+                        print(Fore.GREEN + 'Codes file refreshed, new codes can be used now')
                     message = await ctx.send(embed=embed)
                     print(Fore.RED + f'@{ctx.author} tried to upgrade with an invalid upgrade key ({code})')
                     print(Fore.RESET)
@@ -370,7 +305,7 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                 try:  # Check if code file does exist
                     with open(Codes, "r") as file:
                         bot.codes = [code.strip("\n") for code in file.readlines()]
-                        print(Fore.GREEN + 'Codes file refreshed, new codes can now be used')
+                        print(Fore.GREEN + 'Codes file refreshed, new codes can be used now')
                 except FileNotFoundError:
                     print(Fore.RED +
                           "Codes file can't be found or does not exist, please create new one or move it to same folder where exe of your bot is")
@@ -482,41 +417,14 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                                                 embed = discord.Embed(
                                                     title=f"There were some issues, retrying.", color=0xd3d3d3)
                                                 await message.edit(embed=embed)
-                                if 'displayName' in postLoginJson:
-
-                                    url = "https://www.spotify.com/us/account/overview/"
-
-                                    secondLogin = await session.get(url,headers=headers)
-                                    csrf = secondLogin.headers['X-Csrf-Token']
-
-                                    url = 'https://www.spotify.com/us/family/api/master-invite-by-email/'
-
-                                    headers = {
-                                        'Accept': '*/*',
-                                        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1',
-                                        'x-csrf-token': csrf
-                                    }
-
-                                    postData = {
-                                        'firstName': Name,
-                                        'lastName': Surname,
-                                        'email': email
-                                    }
-
-                                    invitePost = await session.post(url,headers=headers,json=postData)
-                                    inviteJson = await invitePost.json()
-                                    if Debug == "Debug":
-                                        print(inviteJson)
-                                    if inviteJson["success"] is True:
-                                        if Debug == "Debug":
-                                            print(inviteJson.get('token'))
-                                        invitetoken = inviteJson.get('token')
+                                elif 'displayName' in postLoginJson:
+                                    if 1 == 1:
                                         url = "https://www.spotify.com/us/account/overview/"
 
                                         secondLogin = await session.get(url, headers=headers)
                                         csrf = secondLogin.headers['X-Csrf-Token']
 
-                                        url = 'https://www.spotify.com/us/family/overview/'
+                                        url = 'https://www.spotify.com/us/home-hub/api/v1/family/home/'
 
                                         headers = {
                                             'Accept': '*/*',
@@ -524,91 +432,45 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                                             'x-csrf-token': csrf
                                         }
                                         async with await session.get(url,headers=headers) as resp:
-                                            WebsiteResponse = await resp.text()
+                                            WebsiteResponse = await resp.json()
                                             if Debug == "Debug":
                                                 print(Fore.RESET + f"{WebsiteResponse}")
-                                            Replace0 = WebsiteResponse.replace("x7B", "<")
-                                            Replace1 = Replace0.replace("x20","")
-                                            Replace2 = Replace1.replace("x22",'"')
-                                            Replace3 = Replace2.replace("x3A", ':')
-                                            Replace4 = Replace3.replace("x2D", '-')
-                                            Replace5 = Replace4.replace("x5D", ')')
-                                            Replace6 = Replace5.replace("x5B", '(')
-                                            Replace7 = Replace6.replace("x7D", '>')
-                                            Replace8 = Replace7.replace("\\", '')
-                                            PostCodeUnfixed = re.search('postalCode":"(.*)","city"', Replace8)
-                                            if Debug == "Debug":
-                                                print(Fore.RESET + f"Unfixed postal code {PostCodeUnfixed}")
-                                            if PostCodeUnfixed == None:
-                                                ZipCode = ""
-                                            else:    
-                                                PostCodeSep = '","'
-                                                ZipCode = PostCodeUnfixed.group(1).split(PostCodeSep, 1)[0]
-                                            CityUnfixed = re.search(f'"postalCode":"{ZipCode}","city":"(.*)","line1":"', Replace8)
-                                            if Debug == "Debug":
-                                                print(Fore.RESET + f"Unfixed city {CityUnfixed}")
-                                            if CityUnfixed == None:
-                                                City = ""
-                                            else:
-                                                CitySep = '","'
-                                                City = CityUnfixed.group(1).split(CitySep, 1)[0]
-                                            AddressUnfixed = re.search(f'city":"{City}","line1":"(.*)">,"canInvite":', Replace8)
-                                            if Debug == "Debug":
-                                                print(Fore.RESET + f"Unfixed address {AddressUnfixed}")
-                                            if AddressUnfixed == None:
-                                                City = ""
-                                            else:
-                                                AddressSep = '":"'
-                                                AddressTemps = AddressUnfixed.group(1).split(AddressSep, 1)[0]
-                                                AddressTemp = AddressTemps
-                                                AddressTempSep = '">,"canInvite"'
-                                                Address = AddressTemp.split(AddressTempSep, 1)[0]
-                                        if not City:
-                                            embed = discord.Embed(
-                                                title=f"Invitation code was sent, check private messages @{ctx.author}.",color=0x00FF00)
-                                            await message.edit(embed=embed)
-                                            print(Fore.GREEN + f'@{ctx.author} successfully upgraded his account {email} from {country.upper()} in paid mode with code {code}')
-                                            await ctx.author.send(f"Please check for an email from Spotify for an invitation link!"
-                                                                  f"\nFill in these informations in form!"
-                                                                  f"\n"
-                                                                  f"\nInvite sent to: {email}"
-                                                                  f'\n**City**: `You can add random {country.upper()} city`'
-                                                                  f'\n**Street Name**: `You can add random {country.upper()} street`'
-                                                                  f'\n**Postal Code**: `You can add random {country.upper()} postal code`'
-                                                                  f'\n**Country**: `{country.upper()}`'
-                                                                  f'\n**Invite Link**: `https://www.spotify.com/{country.lower()}/family/redeem/?token={invitetoken}`'
-                                                                  f'\n**You can add random {country.upper()} address if these fields are empty.**'
-                                                                  )
-                                            bot.codes.remove(code)  # Remove code from codes list after user got invite code.
-                                            with open("codes.txt", "a") as file:
-                                                file.truncate(0)
-                                                for code in bot.codes:
-                                                    file.write(f"{code}\n")
-                                            result = "true"
-                                            break
-                                        else:
-                                            embed = discord.Embed(
-                                                title=f"Invitation code was sent, check private messages @{ctx.author}.", color=0x00FF00)
-                                            await message.edit(embed=embed)
-                                            print(Fore.GREEN + f'@{ctx.author} successfully upgraded his account {email} from {country.upper()} in paid mode with code {code}')
-                                            await ctx.author.send(f"Please check for an email from Spotify for an invitation link!"
-                                                                       f"\nFill in these informations in form!"
-                                                                       f"\n"
-                                                                       f"\nInvite sent to: {email}"
-                                                                       f'\n**City**: `{City}`'
-                                                                       f'\n**Street Name**: `{Address}`'
-                                                                       f'\n**Postal Code**: `{ZipCode}`'
-                                                                       f'\n**Country**: `{country.upper()}`'
-                                                                       f'\n**Invite Link**: `https://www.spotify.com/{country.lower()}/family/redeem/?token={invitetoken}`'
-                                                                       f'\n**You can add random {country.upper()} address if these fields are empty.**'
-                                                                       )
-                                            bot.codes.remove(code)  # Remove code from codes list after user got invite code.
-                                            with open("codes.txt", "a") as file:
-                                                file.truncate(0)
-                                                for code in bot.codes:
-                                                    file.write(f"{code}\n")
-                                            result = "true"
-                                            break
+                                            accessControl = WebsiteResponse["accessControl"]
+                                            Slots = accessControl["planHasFreeSlots"]
+                                            if Slots is True:
+                                                Address = WebsiteResponse["address"]
+                                                inviteToken = WebsiteResponse["inviteToken"]
+                                                embed = discord.Embed(
+                                                    title=f"Invitation code was sent, check private messages @{ctx.author}.", color=0x00FF00)
+                                                await message.edit(embed=embed)
+                                                print(Fore.GREEN + f'@{ctx.author} successfully upgraded his account {email} from {country.upper()} in free mode')
+                                                await ctx.author.send(f"In order to upgrade your account please click on lin below, and enter prov"
+                                                                           f"\nFill in these informations in form!"
+                                                                           f"\n"
+                                                                           f'\n**Address**: `{Address}`'
+                                                                           f'\n**Invite Link**: https://www.spotify.com/{country.lower()}/family/join/invite/{inviteToken}'
+                                                                           f'\n**You can add random {country.upper()} address if these fields are empty.**'
+                                                                           )
+                                                bot.codes.remove(code)  # Remove code from codes list after user got invite code.
+                                                with open("codes.txt", "a") as file:
+                                                    file.truncate(0)
+                                                    for code in bot.codes:
+                                                        file.write(f"{code}\n")
+                                                result = "true"
+                                                break
+                                            elif Slots is False:
+                                                tries += 1
+                                                if Debug == "Debug":
+                                                    print(Fore.RED + f"Failed to upgrade {ctx.author} retrying...({tries})")
+                                                    print(Fore.RESET)
+                                                embed = discord.Embed(
+                                                title=f"There were some issues, retrying.", color=0xd3d3d3)
+                                                await message.edit(embed=embed)
+                                                with open(f"Accounts/{country.upper()}.txt", "w") as f:
+                                                    for line in lines:
+                                                        if line.strip("\n") != f"{user}:{password}":
+                                                            f.write(line)
+                                                result = 'false'
                                     else:
                                         tries += 1
                                         if Debug == "Debug":
@@ -645,7 +507,6 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
             embed = discord.Embed(
                 title=f"You can only use this command in #{Channel}", color=0xd3d3d3)
             message = await ctx.send(embed=embed)
-
 @bot.command()
 async def stock(ctx, country:str):
     """ This command can be used to check current stocks.
@@ -783,5 +644,14 @@ async def cls(ctx):
            |___/                                      
     """)
     print(Fore.RESET)
-
+@bot.event
+async def on_command_error(ctx,exception):
+    if Debug == "Debug":
+        print(Fore.RESET)
+        print(Fore.RED +f"@{ctx.author} tried to upgrade his account but got an exception: {exception}")
+        print(Fore.RESET)
+    if isinstance(exception, commands.errors.MissingRequiredArgument):
+        embed = discord.Embed(
+            title=f'You need to enter redeem code behind your email ({data["Prefix"]}redeem country email code)', color=0xff5959)
+        message = await ctx.send(embed=embed)
 bot.run(token)
